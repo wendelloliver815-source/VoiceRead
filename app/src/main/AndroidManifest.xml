@@ -1,33 +1,24 @@
-name: Android CI
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+    <application
+        android:allowBackup="true"
+        android:label="VoiceRead"
+        android:supportsRtl="true">
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
 
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
+        </activity>
 
-      - name: Build APK
-        run: gradle assembleDebug
+    </application>
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: VoiceRead-debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+</manifest>
